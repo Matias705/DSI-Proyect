@@ -10,7 +10,7 @@ namespace dsi_proyect.Entities
     public class Encuesta
     {
         private DateTime fechaVigente;
-        private string descripcion = "Preguntas de la encuesta";
+        private string descripcion;
         private List<Pregunta> pregunta;
         //se puede romper por el equal q hice en la otra clase!!
 
@@ -26,17 +26,19 @@ namespace dsi_proyect.Entities
             return pregunta;
         }
 
-        public Boolean esEncuestaDeCliente(List<Pregunta> listaPregunta)
-        {
-            if (listaPregunta.SequenceEqual(pregunta)) 
-            {
-                return true;
-            }
-            else 
-            { 
-                return false; 
-            }       
-        }
+        //Esto se  comenta xq no se usa y ni idea de xq lo programe
+
+        //public Boolean esEncuestaDeCliente(List<Pregunta> listaPregunta)
+        //{
+        //    if (listaPregunta.SequenceEqual(pregunta)) 
+        //    {
+        //        return true;
+        //    }
+        //    else 
+        //    { 
+        //        return false; 
+        //    }       
+        //}
 
         public void armarEncuesta()
         {

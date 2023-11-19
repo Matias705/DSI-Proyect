@@ -26,7 +26,7 @@ namespace dsi_proyect.Entities
 
         public Boolean esEstadoInicial()
         {
-            if (estadoLlamada.esIniciada(estadoLlamada)) //preguntar esto
+            if (estadoLlamada.esIniciada()) 
             { 
                 return true;
             }
@@ -35,7 +35,7 @@ namespace dsi_proyect.Entities
 
         public Boolean esEstadoFinalizado()
         {
-            if (estadoLlamada.esFinalizada()) //preguntar esto
+            if (estadoLlamada.esFinalizada()) 
             {
                 return true;
             }
@@ -48,12 +48,14 @@ namespace dsi_proyect.Entities
             for (int i = 0; i < listaCambioEstado.Count; i++)
             {
                 CambioEstado objeto = listaCambioEstado[i];
+                //se evaluará como verdadera si la fecha y hora de inicio del objeto actual
+                //(this) es anterior a la fecha y hora de inicio del objeto objeto. 
                 if (DateTime.Compare(this.getfechaHoraInicio(), objeto.getfechaHoraInicio()) < 0)
-                {
-                    estadoLlamada.setNombre(listaCambioEstado[i].getNombreEstado());
-                    //return true;
+                {   
+                    //ESTO LO COMENTE XQ NO SABIA Q PORONGA HACIA, CAPAZ EL MATI DEL PASADO SI, PERO YO NO.
+                    //estadoLlamada.setNombre(listaCambioEstado[i].getNombreEstado());
+                    return false;
                 }
-
             }
             return true;
 

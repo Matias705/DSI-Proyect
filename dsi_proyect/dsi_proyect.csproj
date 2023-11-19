@@ -73,6 +73,12 @@
       <DependentUpon>Frm_Escritorio.cs</DependentUpon>
     </Compile>
     <Compile Include="Logica de Negocio\GestorConsultarEncuesta.cs" />
+    <Compile Include="Logica de Negocio\IAgregado.cs" />
+    <Compile Include="Logica de Negocio\IIterador.cs" />
+    <Compile Include="Logica de Negocio\IiteradorPreguntas.cs" />
+    <Compile Include="Logica de Negocio\IteradorEncuestas.cs" />
+    <Compile Include="Logica de Negocio\IteradorLlamada.cs" />
+    <Compile Include="Logica de Negocio\IteradorRespuestas.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dsi_proyect.Logica_de_Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -12,7 +13,6 @@ namespace dsi_proyect.Entities
 {
     public class Llamada
     {
-        // TERMINAR ESTE BICHOOOOOOOO
         private string descripcionOperador;
         private string detalleAccionRequerida;
         private int duracion;
@@ -55,7 +55,7 @@ namespace dsi_proyect.Entities
             return duracion;
         }
 
-        public Boolean esDePeriodo(DateTime fechaDesde, DateTime fechaHasta)
+        public (Boolean,DateTime) esDePeriodo(DateTime fechaDesde, DateTime fechaHasta)
         {
 
             foreach (CambioEstado cambioEstadoLlamada in cambioEstado)
@@ -66,12 +66,13 @@ namespace dsi_proyect.Entities
                     //MessageBox.Show("ENTRO");
                     if (DateTime.Compare(fechaDesde, fechaInicioObtenida) <= 0 && DateTime.Compare(fechaInicioObtenida, fechaHasta) <= 0)
                     {
-                        return true;
+                        
+                        return (true, fechaInicioObtenida);
                     }
                 }   
 
             }
-            return false;
+            return (false, DateTime.MaxValue);
         }
 
         public Boolean tieneEncuestaRespondida()
@@ -90,16 +91,26 @@ namespace dsi_proyect.Entities
 
         public string getNombreEstadoActual()
         {
-            foreach (CambioEstado item in cambioEstado)
-            {
-                if (item.esUltimoEstado(cambioEstado))
-                {
-                    return item.getNombreEstado();
-                }
+            //esultimocabiodeestado()
+            int i = 0;
+            while (!(cambioEstado[i].esUltimoEstado(cambioEstado)))
+            {   
+                i++;
+
             }
-            return "error";
+            return cambioEstado[i].getNombreEstado();
+
+            //foreach (CambioEstado item in cambioEstado)
+            //{
+            //    if (item.esUltimoEstado(cambioEstado))
+            //    {
+            //        return item.getNombreEstado();
+            //    }
+            //    else { continue; }
+            //}
+            //return "error";
         }
-        public int calcularDuracion() 
+        public double calcularDuracion() 
         {
             DateTime var1, var2;
             var1 = new DateTime();
@@ -123,30 +134,52 @@ namespace dsi_proyect.Entities
                 return 0; 
             } else
             {
-        
                 TimeSpan duracion = var2 - var1;
                 
-                return duracion.Hours;// ACA QUE QUEDE MAS LINDO LA DURACION
+                return duracion.TotalMinutes;// ACA QUE QUEDE MAS LINDO LA DURACION
 
             }
+        }
+
+        public IIterador crearIterador(List<RespuestaDeCliente> respuestasEncuesta)
+        {
+            return new IteradorRespuestas(respuestasEncuesta);
         }
 
         public string getRespuestas()
         {
             string rta = " ";
-            foreach (RespuestaDeCliente rtaCliente in respuestasEncuesta)
+
+
+            IIterador iterador = (IteradorRespuestas)crearIterador(respuestasEncuesta);
+            iterador.primero();
+            while (!iterador.haTerminado())
             {
-                if (rta == " " )
+                RespuestaDeCliente respuestaActual = (RespuestaDeCliente)iterador.actual();
+                if (rta == " ")
                 {
-                    rta = "-" + rtaCliente.getDescripcionRta();
+                    rta = "-" + respuestaActual.getDescripcionRta();
                 }
                 else
                 {
-                    rta += "\r\n" + "-" + rtaCliente.getDescripcionRta();
-                }
-                
-            }
+                    rta += "\r\n" + "-" + respuestaActual.getDescripcionRta();
 
+                    iterador.siguiente();
+                }
+
+                //foreach (RespuestaDeCliente rtaCliente in respuestasEncuesta)
+                //{
+                //    if (rta == " " )
+                //    {
+                //        rta = "-" + rtaCliente.getDescripcionRta();
+                //    }
+                //    else
+                //    {
+                //        rta += "\r\n" + "-" + rtaCliente.getDescripcionRta();
+                //    }
+
+                //}
+            }
             return rta;
         } 
 

@@ -24,3 +24,16 @@ C:\Users\boca_\OneDrive\Escritorio\dsi_proyect\dsi_proyect\obj\Debug\dsi_proyect
 C:\Users\boca_\OneDrive\Escritorio\dsi_proyect\dsi_proyect\obj\Debug\dsi_proyect.csproj.CoreCompileInputs.cache
 C:\Users\boca_\OneDrive\Escritorio\dsi_proyect\dsi_proyect\obj\Debug\dsi_proyect.exe
 C:\Users\boca_\OneDrive\Escritorio\dsi_proyect\dsi_proyect\obj\Debug\dsi_proyect.pdb
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\bin\Debug\dsi_proyect.exe.config
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\bin\Debug\dsi_proyect.exe
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\bin\Debug\dsi_proyect.pdb
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\obj\Debug\dsi_proyect.csproj.AssemblyReference.cache
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\obj\Debug\dsi_proyect.csproj.SuggestedBindingRedirects.cache
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\obj\Debug\dsi_proyect.Interfaces.Frm_ConsultarEncuesta.resources
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\obj\Debug\dsi_proyect.Frm_Escritorio.resources
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\obj\Debug\dsi_proyect.Interfaces.Frm_InfLlamada.resources
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\obj\Debug\dsi_proyect.Properties.Resources.resources
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\obj\Debug\dsi_proyect.csproj.GenerateResource.cache
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\obj\Debug\dsi_proyect.csproj.CoreCompileInputs.cache
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\obj\Debug\dsi_proyect.exe
+C:\Users\boca_\OneDrive\Escritorio\TP DSI Mio\DSI-Proyect\dsi_proyect\obj\Debug\dsi_proyect.pdb

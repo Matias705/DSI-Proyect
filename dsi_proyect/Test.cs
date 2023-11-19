@@ -137,8 +137,8 @@ namespace dsi_proyect
             listaDePreguntas2.Add(preguntas6);
             listaDePreguntas2.Add(preguntas4);
 
-            encuesta1 = new Encuesta(fecha1, null, listaDePreguntas);
-            encuesta2 = new Encuesta(fecha3,null, listaDePreguntas2);
+            encuesta1 = new Encuesta(fecha1, "Encuesta de servicio", listaDePreguntas);
+            encuesta2 = new Encuesta(fecha3,"Encuesta de afiliacion", listaDePreguntas2);
 
             List<CambioEstado> listCambio = new List<CambioEstado>();
             listCambio.Add(cambioEstado1);
@@ -146,6 +146,7 @@ namespace dsi_proyect
 
             List<CambioEstado> listCambio2 = new List<CambioEstado>();
             listCambio2.Add(cambioEstado2);
+            listCambio2.Add(cambioEstado4);
 
             List<CambioEstado> listCambio3 = new List<CambioEstado>();
             listCambio3.Add(cambioEstado5);

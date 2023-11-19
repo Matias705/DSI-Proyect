@@ -11,6 +11,7 @@ namespace dsi_proyect.Entities
         private string nombre;
 
         // iniciada, finaliza, descartada, controlada
+        // enum
 
         public Estado()
         {
@@ -31,19 +32,11 @@ namespace dsi_proyect.Entities
             return false;
 
         }
-        public Boolean esFinalizada(Estado estado) 
-        {
-            if (estado.getNombre() == "Finalizada") 
-            { 
-                return true;
-            }
-            return false;
-              
-        }
+        
 
-        public Boolean esIniciada(Estado estado)
+        public Boolean esIniciada()
         {
-            if (estado.getNombre() == "Iniciada")
+            if (this.getNombre() == "Iniciada")
             {
                 return true;
             }

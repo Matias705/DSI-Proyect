@@ -19,21 +19,8 @@ namespace dsi_proyect.Logica_de_Negocio
         private DateTime periodoAFiltrar;
         private Estado estadoActual;
         private string datosRespuesta;
-        // agregue este atributo
         private List<Encuesta> listaEncuestas;
-        //private DataTable CrearTablaLlamada()
-        //{
-        //    DataTable table = new DataTable();
-        //    table.Columns.Add("Numero de Llamada", typeof(int));
-        //    table.Columns.Add("Fecha de Llamada", typeof(DateTime));
-
-        //    table.Rows.Add(7654, DateTime.Parse("08/04/2023"));
-        //    table.Rows.Add(7655, DateTime.Parse("08/05/2023"));
-        //    table.Rows.Add(7673, DateTime.Parse("17/05/2023"));
-        //    table.Rows.Add(7669, DateTime.Parse("09/05/2023"));
-        //    table.Rows.Add(7666, DateTime.Parse("02/05/2023"));
-        //    return table;
-        //}
+        
 
         public void nuevaConsulta()
         {
@@ -49,6 +36,14 @@ namespace dsi_proyect.Logica_de_Negocio
             
             return (fechaDesde,fechaHasta);
         }
+
+        public IIterador crearIterador(List<Llamada> llamadas)
+        {
+            return new IteradorLlamada(llamadas);
+        }
+        
+       
+
 
         public DataTable buscarLlamada(Frm_ConsultarEncuesta formulario)
         {
@@ -67,70 +62,75 @@ namespace dsi_proyect.Logica_de_Negocio
             tablaFiltrada.Columns.Add("Numero de Llamada", typeof(int));
             tablaFiltrada.Columns.Add("Fecha de Llamada", typeof(DateTime));
 
-            foreach (Llamada call in listaLlamada)
-            {
-                // luego vemos lo de la encuesta respondida
-                if (call.esDePeriodo(fechaDesde, fechaHasta) && call.tieneEncuestaRespondida())
-                {
-                    List<CambioEstado> cambioDeEstados = call.GetCambioEstados();
-                    foreach (CambioEstado cambioEstado in cambioDeEstados)
-                    {
-                        if (cambioEstado.esEstadoInicial())
-                        {
-                            tablaFiltrada.Rows.Add(call.getNumeroLlamada(), cambioEstado.getfechaHoraInicio());
-                            
-                        }
-                    }
-                }
+            //foreach (Llamada call in listaLlamada)
+            //{
+            //    // luego vemos lo de la encuesta respondida
+            //    if (call.esDePeriodo(fechaDesde, fechaHasta) && call.tieneEncuestaRespondida())
+            //    {
+            //        List<CambioEstado> cambioDeEstados = call.GetCambioEstados();
+            //        foreach (CambioEstado cambioEstado in cambioDeEstados)
+            //        {
+            //            if (cambioEstado.esEstadoInicial())
+            //            {
+            //                tablaFiltrada.Rows.Add(call.getNumeroLlamada(), cambioEstado.getfechaHoraInicio());
 
+            //            }
+            //        }
+            //    }
+
+            //}
+
+            IIterador iterador = (IteradorLlamada) crearIterador(listaLlamada);
+            iterador.primero();
+            while (!iterador.haTerminado())
+            {
+                Llamada llamadaActual = (Llamada)iterador.actual();
+                if (iterador.cumpleFiltro(fechaDesde, fechaHasta, llamadaActual))
+                {
+                    tablaFiltrada.Rows.Add(llamadaActual.getNumeroLlamada(), llamadaActual.esDePeriodo(fechaDesde, fechaHasta).Item2);
+                }
+                iterador.siguiente();
             }
 
+
             return tablaFiltrada;
 
         }
-        /// <summary>
-        /// //////////////////
-        /// </summary>
-        /// <returns></returns>
-        //public DataTable RecuperarTodos()
+       
+
+        //public Boolean ValidarFechas(DateTime fechaDesde , DateTime fechaHasta)
         //{
-        //    DataTable tablita = CrearTablaLlamada();
-        //    return tablita;
+        //    int resultado = DateTime.Compare(fechaDesde, fechaHasta);
+
+        //    if (resultado > 0) { return false; }
+        //    else { return true; }
         //}
 
-        public Boolean ValidarFechas(DateTime fechaDesde , DateTime fechaHasta)
-        {
-            int resultado = DateTime.Compare(fechaDesde, fechaHasta);
 
-            if (resultado > 0) { return false; }
-            else { return true; }
-        }
-
-
-        public  DataTable RecuperarFiltrado(DateTime fechaDesde, DateTime fechaHasta, DataTable tablita)
-        {
-            DataTable tablaFiltrada = new DataTable();
-            tablaFiltrada.Columns.Add("Numero de Llamada", typeof(int));
-            tablaFiltrada.Columns.Add("Fecha de Llamada", typeof(DateTime));
+        //public  DataTable RecuperarFiltrado(DateTime fechaDesde, DateTime fechaHasta, DataTable tablita)
+        //{
+        //    DataTable tablaFiltrada = new DataTable();
+        //    tablaFiltrada.Columns.Add("Numero de Llamada", typeof(int));
+        //    tablaFiltrada.Columns.Add("Fecha de Llamada", typeof(DateTime));
            
-            for (int i = 0; i < tablita.Rows.Count; i++)
-            {
-                // Supongamos que quieres agregar solo las filas donde la edad sea mayor a 25
-                DateTime fecha = Convert.ToDateTime(tablita.Rows[i]["Fecha de Llamada"]);
-                if (DateTime.Compare(fechaDesde, fecha) <= 0 && DateTime.Compare(fechaHasta, fecha) >= 0 )  
-                {
-                    tablaFiltrada.Rows.Add(tablita.Rows[i]["Numero de Llamada"], tablita.Rows[i]["Fecha de Llamada"]);
+        //    for (int i = 0; i < tablita.Rows.Count; i++)
+        //    {
+        //        // Supongamos que quieres agregar solo las filas donde la edad sea mayor a 25
+        //        DateTime fecha = Convert.ToDateTime(tablita.Rows[i]["Fecha de Llamada"]);
+        //        if (DateTime.Compare(fechaDesde, fecha) <= 0 && DateTime.Compare(fechaHasta, fecha) >= 0 )  
+        //        {
+        //            tablaFiltrada.Rows.Add(tablita.Rows[i]["Numero de Llamada"], tablita.Rows[i]["Fecha de Llamada"]);
                     
-                }
-            } 
-            return tablaFiltrada;
-        }
+        //        }
+        //    } 
+        //    return tablaFiltrada;
+        //}
 
-        public void armarEncuesta(Encuesta encuestaEncontrada)
+        public void armarEncuestaLlamada(Encuesta encuestaEncontrada)
         {
             encuestaEncontrada.armarEncuesta();
         }
-        public (string , string , string , string, string ) MostrarDatosRespuestas(int numLlamada, DateTime fecha)
+        public (string , string , string , string, string) MostrarDatosRespuestas(int numLlamada, DateTime fecha)
         {
             Test test = new Test();
             test.crearTodo();
@@ -150,7 +150,7 @@ namespace dsi_proyect.Logica_de_Negocio
             string txtRespuestas = llamada.getRespuestas().ToString();
 
             Encuesta encuestaEncontrada = this.buscarEncuesta(listaEncuestas, llamada);
-            this.armarEncuesta(encuestaEncontrada);
+            this.armarEncuestaLlamada(encuestaEncontrada);
             string txtPreguntas = encuestaEncontrada.getDescripcion();
                                                                                                                         
             return (txtCliente, txtEstadoActual, txtDuracion, txtRespuestas, txtPreguntas);
@@ -175,31 +175,34 @@ namespace dsi_proyect.Logica_de_Negocio
             return null;
         }
 
+
+
         private Encuesta buscarEncuesta(List<Encuesta> listaEncuesta, Llamada llamada)
         {
             Boolean bandera = false;
             //recorro las Encuestas
-            for (int i = 0; i< listaEncuesta.Count; i++)
-            {   
+            for (int i = 0; i < listaEncuesta.Count; i++)
+            {
                 // Cada encuesta tiene una lista de preguntas
                 List<Pregunta> listaPreguntas = listaEncuesta[i].getPreguntas();
                 Boolean banderaAux = true;
                 //Recorro la lista de preguntas
-                for (int j= 0; j< listaPreguntas.Count; j++)
-                {   
+                for (int j = 0; j < listaPreguntas.Count; j++)
+                {
                     // Comparo cada pregunta con las Respuestas del cliente
                     List<RespuestaDeCliente> listaRtaCliente = llamada.getRespuestaEncuesta();
-                    for (int s = 0; s< listaRtaCliente.Count; s++)
+                    for (int s = 0; s < listaRtaCliente.Count; s++)
                     {
 
                         //Utilizo el metodo en la clase Preguntas, que me permite ver si las respuestas del cliente estaba dentro de las posibilidades
                         if (listaPreguntas[j].esDePregunta(llamada.getRespuestaEncuesta()[s].getDescripcionRta()) == false && s == llamada.getRespuestaEncuesta().Count - 1)
-                        {   
+                        {
                             // salir de aca significa que no estuvo
                             banderaAux = false;
                             break;
-                        
-                        }else if (listaPreguntas[j].esDePregunta(llamada.getRespuestaEncuesta()[s].getDescripcionRta()) )
+
+                        }
+                        else if (listaPreguntas[j].esDePregunta(llamada.getRespuestaEncuesta()[s].getDescripcionRta()))
                         {
                             ////    // si entro aca significa q recorrio toda las posibilidades
                             break;
@@ -209,9 +212,9 @@ namespace dsi_proyect.Logica_de_Negocio
                         //{   
                         //    banderaEspecial = true;
                         //    break;
-                        
+
                     }
-                    if  (banderaAux == false) { break; }
+                    if (banderaAux == false) { break; }
                     if (listaPreguntas.Count - 1 == j) { bandera = true; }
 
                 }
@@ -222,6 +225,8 @@ namespace dsi_proyect.Logica_de_Negocio
             }
             return null;
         }
+
+
 
 
 
